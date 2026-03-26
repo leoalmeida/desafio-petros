@@ -15,5 +15,7 @@ import lombok.Setter;
 public class PptDtoResponse {
     private Long id;
     private LocalDateTime dataHora;
+    private JogadaEnum jogador1;
+    private JogadaEnum jogador2;
     private ResultadoEnum resultado;
 }

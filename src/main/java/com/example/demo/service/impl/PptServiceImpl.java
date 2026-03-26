@@ -16,6 +16,8 @@ public class PptServiceImpl implements PptService {
     public PptDtoResponse realizarJogada(final PptDtoRequest request) {
         PptDtoResponse response = new PptDtoResponse();
         response.setDataHora(java.time.LocalDateTime.now());
+        response.setJogador1(request.getJogador1());
+        response.setJogador2(request.getJogador2());
         if (request.getJogador1().equals(request.getJogador2())) {
             response.setResultado(ResultadoEnum.EMPATE);
         } else if ((request.getJogador1().equals(JogadaEnum.PEDRA)

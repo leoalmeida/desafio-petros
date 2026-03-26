@@ -3,11 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.dto.PptDtoRequest;
 import com.example.demo.dto.PptDtoResponse;
 import com.example.demo.service.PptService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/PPT")
 public class PptController {
 
-    @Autowired
-    private PptService pptService;
+    private final PptService pptService;
+
+    public PptController(final PptService pptService) {
+        this.pptService = pptService;
+    }
 
     /**
      * A aplicação deve expor um endpoint POST que receba as jogadas dos dois

@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum ResultadoEnum {
     EMPATE(0, "Empate"),
     JOGADOR_1_VENCE(1, "Jogador 1 vence"),
@@ -18,6 +20,11 @@ public enum ResultadoEnum {
     }
 
     public String getDescription() {
+        return description;
+    }
+
+    @JsonValue
+    public String toJson() {
         return description;
     }
 }
