@@ -20,9 +20,11 @@ class PptControllerIntegrationTest {
 
     @Test
     void deveAceitarJogadasCaseInsensitiveERetornarResultadoDescritivo() throws Exception {
-        mockMvc.perform(post("/api/v1/PPT")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
+        mockMvc.perform(
+                        post("/api/v1/PPT")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
                                 {
                                   "jogador1": "papel",
                                   "jogador2": "Pedra"
@@ -37,9 +39,11 @@ class PptControllerIntegrationTest {
 
     @Test
     void deveRetornarBadRequestQuandoJogadaForInvalida() throws Exception {
-        mockMvc.perform(post("/api/v1/PPT")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
+        mockMvc.perform(
+                        post("/api/v1/PPT")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
                                 {
                                   "jogador1": "lagarto",
                                   "jogador2": "pedra"
@@ -47,4 +51,18 @@ class PptControllerIntegrationTest {
                                 """))
                 .andExpect(status().isBadRequest());
     }
+
+                @Test
+                void deveRetornarBadRequestQuandoJogador2NaoForInformado() throws Exception {
+                                mockMvc.perform(
+                                                                                                post("/api/v1/PPT")
+                                                                                                                                .contentType(MediaType.APPLICATION_JSON)
+                                                                                                                                .content(
+                                                                                                                                                                """
+                                                                                                                                {
+                                                                                                                                        "jogador1": "pedra"
+                                                                                                                                }
+                                                                                                                                """))
+                                                                .andExpect(status().isBadRequest());
+                }
 }

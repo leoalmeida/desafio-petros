@@ -1,45 +1,231 @@
-🧪 Desafio Prático – Pedra, Papel e Tesoura (API com Spring Boot)
+# Pedra, Papel e Tesoura API
 
-🎯 Objetivo:
+![Java](https://img.shields.io/badge/Java-17-007396)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F)
+![Maven](https://img.shields.io/badge/Maven-Build%20Tool-C71A36)
 
-Criar uma aplicação Java com Spring Boot que ofereça uma API REST para jogar Pedra, Papel e Tesoura entre dois jogadores.
+Aplicacao Java com Spring Boot que expoe uma API REST para jogar Pedra, Papel e Tesoura entre dois jogadores.
 
-📝 Requisitos:
+## Objetivo
 
-A aplicação deve expor um endpoint POST que receba as jogadas dos dois jogadores e retorne o resultado da partida.
-As jogadas devem ser informadas como strings: "PEDRA", "PAPEL" ou "TESOURA" (case-insensitive).
-A resposta deve indicar:
-As jogadas de cada jogador
-O resultado da partida:
-"Empate"
-"Jogador 1 vence"
-"Jogador 2 vence"
-✅ Regras do jogo:
+Receber as jogadas de dois jogadores, comparar as regras do jogo e retornar o resultado da partida.
 
-Pedra vence Tesoura
-Tesoura vence Papel
-Papel vence Pedra
-Jogadas iguais resultam em empate
-📦 Exemplo de chamada (POST /jogar):
+## Regras do jogo
 
-Request JSON:
+- Pedra vence Tesoura
+- Tesoura vence Papel
+- Papel vence Pedra
+- Jogadas iguais resultam em empate
 
-{"jogador1": "PAPEL","jogador2": "PEDRA" } 
-Response JSON:
+## Tecnologias utilizadas
 
-{"jogador1": "PAPEL","jogador2": "PEDRA","resultado": "Jogador 1 vence" } 
-💡 Dicas Técnicas:
+- Java 17
+- Spring Boot
+- Maven
+- JUnit 5
+- Docker e Docker Compose
 
-Crie um enum chamado Jogada com os valores PEDRA, PAPEL, TESOURA
-Crie uma classe JogoService com a lógica para comparar as jogadas
-Use boas práticas de clean code e orientação a objetos
-Não é necessário persistência ou banco de dados — apenas lógica
- 
+## Endpoint da API
 
-🧩 O que será avaliado:
+Base path:
 
-Correção da lógica do jogo
-Uso adequado do Spring Boot (REST, DTOs, etc.)
-Estrutura e organização do projeto
-Código limpo, legível e bem estruturado
- 
+```text
+/api/v1/PPT
+```
+
+Endpoint disponivel:
+
+```http
+POST /api/v1/PPT
+```
+
+### Exemplo de requisicao
+
+```json
+{
+    "id": 1,
+	"jogador1": "PAPEL",
+	"jogador2": "pedra"
+}
+```
+
+As jogadas aceitas sao:
+
+- `PEDRA`
+- `PAPEL`
+- `TESOURA`
+
+A entrada e case-insensitive, entao valores como `pedra`, `Pedra` e `PEDRA` sao aceitos.
+
+### Exemplo de resposta
+
+```json
+{
+	"id": 1,
+	"dataHora": "2026-03-26T17:20:45.123456",
+	"jogador1": "PAPEL",
+	"jogador2": "PEDRA",
+	"resultado": "Jogador 1 vence"
+}
+```
+
+### Exemplo com curl
+
+```bash
+curl --request POST http://localhost:8080/api/v1/PPT \
+	--header "Content-Type: application/json" \
+	--data '{
+        "id": 1,
+		"jogador1": "TESOURA",
+		"jogador2": "PAPEL"
+	}'
+```
+
+## Exemplos de erro da API
+
+### 1. Jogada invalida
+
+Quando uma jogada nao pertence ao conjunto `PEDRA`, `PAPEL` ou `TESOURA`, a API responde com erro 400.
+
+Exemplo de requisicao:
+
+```json
+{
+    "id": 1,
+	"jogador1": "LAGARTO",
+	"jogador2": "PEDRA"
+}
+```
+
+Resposta esperada:
+
+```http
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+```
+
+Exemplo de corpo de resposta:
+
+```json
+{
+	"timestamp": "2026-03-26T21:11:33.185+00:00",
+	"status": 400,
+	"error": "Bad"" Request",
+	"path": "/api/v1/PPT"
+}
+```
+
+### 2. JSON malformado
+
+Quando o corpo da requisicao nao e um JSON valido, a API responde com erro 400.
+
+Exemplo de requisicao invalida:
+
+```json
+{
+    "id": 1,
+	"jogador1": "PEDRA",
+	"jogador2": "TESOURA",
+}
+```
+
+Resposta esperada:
+
+```http
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+```
+
+Exemplo de corpo de resposta:
+
+```json
+{
+	"timestamp": "2026-03-26T21:13:02.410+00:00",
+	"status": 400,
+	"error": "Bad Request",
+	"path": "/api/v1/PPT"
+}
+```
+
+## Como executar o projeto
+
+### Pre-requisitos
+
+- Java 17 instalado
+- Maven 3.8+ ou uso do Maven Wrapper do projeto
+
+### Executar localmente com Maven Wrapper
+
+No Windows:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+No Linux ou macOS:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Por padrao, a aplicacao sobe em:
+
+```text
+http://localhost:8080
+```
+
+## Como executar os testes
+
+No Windows:
+
+```powershell
+.\mvnw.cmd test
+```
+
+No Linux ou macOS:
+
+```bash
+./mvnw test
+```
+
+## Executar com Docker
+
+O projeto possui `Dockerfile` e `docker-compose.yaml`.
+
+Antes de subir com Docker Compose, crie um arquivo `.env` na raiz do projeto com as portas usadas pelo container:
+
+```env
+SPRING_PPT_GAME_LOCAL_PORT=8080
+SPRING_PPT_GAME_DOCKER_PORT=8081
+```
+
+Depois execute:
+
+```bash
+docker compose up --build
+```
+
+Nesse modo, a porta exposta localmente sera definida por `SPRING_PPT_GAME_LOCAL_PORT`.
+
+## Documentacao da API
+
+Como o projeto usa Springdoc OpenAPI, a interface Swagger UI pode ser acessada apos subir a aplicacao em:
+
+```text
+http://localhost:8080/swagger-ui/index.html
+```
+
+## Estrutura basica do projeto
+
+```text
+src/main/java/com/example/demo
+|-- controller
+|-- dto
+|-- service
+```
+
+## Possiveis respostas da partida
+
+- `Empate`
+- `Jogador 1 vence`
+- `Jogador 2 vence`

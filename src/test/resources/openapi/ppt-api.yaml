@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: PPT Game API
+  version: 1.0.0
+paths:
+  /api/v1/PPT:
+    post:
+      summary: Realiza uma jogada de Pedra, Papel e Tesoura
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PptDtoRequest'
+      responses:
+        '200':
+          description: Resultado da partida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PptDtoResponse'
+        '400':
+          description: Requisicao invalida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+
+components:
+  schemas:
+    PptDtoRequest:
+      type: object
+      required:
+        - jogador1
+        - jogador2
+      properties:
+        id:
+          type: integer
+          format: int64
+        jogador1:
+          type: string
+          enum:
+            - PEDRA
+            - PAPEL
+            - TESOURA
+        jogador2:
+          type: string
+          enum:
+            - PEDRA
+            - PAPEL
+            - TESOURA
+    PptDtoResponse:
+      type: object
+      required:
+        - dataHora
+        - jogador1
+        - jogador2
+        - resultado
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        dataHora:
+          type: string
+          format: date-time
+        jogador1:
+          type: string
+          enum:
+            - PEDRA
+            - PAPEL
+            - TESOURA
+        jogador2:
+          type: string
+          enum:
+            - PEDRA
+            - PAPEL
+            - TESOURA
+        resultado:
+          type: string
+          enum:
+            - Empate
+            - Jogador 1 vence
+            - Jogador 2 vence
+    BadRequestResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+        error:
+          type: string
+        path:
+          type: string

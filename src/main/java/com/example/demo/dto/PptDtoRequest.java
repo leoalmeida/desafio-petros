@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,10 @@ import lombok.Setter;
 public class PptDtoRequest {
 
     private Long id;
+
+    @NotNull(message = "jogador1 e obrigatorio")
     private JogadaEnum jogador1;
+
+    @NotNull(message = "jogador2 e obrigatorio")
     private JogadaEnum jogador2;
 }

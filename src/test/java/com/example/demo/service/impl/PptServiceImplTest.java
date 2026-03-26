@@ -20,7 +20,8 @@ class PptServiceImplTest {
     @MethodSource("jogadas")
     void deveAvaliarResultadoDaPartida(
             final JogadaEnum jogador1, final JogadaEnum jogador2, final ResultadoEnum resultadoEsperado) {
-        PptDtoRequest request = PptDtoRequest.builder().jogador1(jogador1).jogador2(jogador2).build();
+        PptDtoRequest request =
+                PptDtoRequest.builder().jogador1(jogador1).jogador2(jogador2).build();
 
         PptDtoResponse response = pptService.realizarJogada(request);
 
