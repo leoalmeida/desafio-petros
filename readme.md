@@ -108,9 +108,10 @@ Exemplo de corpo de resposta:
 
 ```json
 {
-	"timestamp": "2026-03-26T21:11:33.185+00:00",
+	"timestamp": "2026-03-26T21:11:33.185",
 	"status": 400,
-	"error": "Bad"" Request",
+	"error": "Bad Request",
+	"message": "Corpo da requisicao invalido",
 	"path": "/api/v1/PPT"
 }
 ```
@@ -140,10 +141,14 @@ Exemplo de corpo de resposta:
 
 ```json
 {
-	"timestamp": "2026-03-26T21:13:02.410+00:00",
+	"timestamp": "2026-03-26T21:13:02.410",
 	"status": 400,
 	"error": "Bad Request",
-	"path": "/api/v1/PPT"
+	"message": "Erro de validacao",
+	"path": "/api/v1/PPT",
+	"fieldErrors": {
+		"jogador2": "jogador2 e obrigatorio"
+	}
 }
 ```
 

@@ -26,6 +26,7 @@ class PptControllerIntegrationTest {
                                 .content(
                                         """
                                 {
+                                  "id": 1,
                                   "jogador1": "papel",
                                   "jogador2": "Pedra"
                                 }
@@ -45,11 +46,17 @@ class PptControllerIntegrationTest {
                                 .content(
                                         """
                                 {
+                                  "id": 1,  
                                   "jogador1": "lagarto",
                                   "jogador2": "pedra"
                                 }
                                 """))
-                .andExpect(status().isBadRequest());
+                                                                .andExpect(status().isBadRequest())
+                                                                .andExpect(jsonPath("$.status").value(400))
+                                                                .andExpect(jsonPath("$.error").value("Bad Request"))
+                                                                .andExpect(jsonPath("$.message").value("Corpo da requisicao invalido"))
+                                                                .andExpect(jsonPath("$.path").value("/api/v1/PPT"))
+                                                                .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 
     @Test
@@ -59,10 +66,16 @@ class PptControllerIntegrationTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         """
-                                                                                                                                {
-                                                                                                                                        "jogador1": "pedra"
-                                                                                                                                }
-                                                                                                                                """))
-                .andExpect(status().isBadRequest());
+                                {
+                                  "jogador1": "pedra"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message").value("Erro de validacao"))
+                .andExpect(jsonPath("$.fieldErrors.jogador2").value("jogador2 e obrigatorio"))
+                .andExpect(jsonPath("$.path").value("/api/v1/PPT"))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 }

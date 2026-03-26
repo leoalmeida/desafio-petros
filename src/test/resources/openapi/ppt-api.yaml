@@ -21,6 +21,10 @@ paths:
                 $ref: '#/components/schemas/PptDtoResponse'
         '400':
           description: Requisicao invalida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
 
 components:
   schemas:
@@ -77,3 +81,26 @@ components:
             - Empate
             - Jogador 1 vence
             - Jogador 2 vence
+    ApiErrorResponse:
+      type: object
+      required:
+        - timestamp
+        - status
+        - error
+        - message
+        - path
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        fieldErrors:
+          type: object
+          additionalProperties:
+            type: string

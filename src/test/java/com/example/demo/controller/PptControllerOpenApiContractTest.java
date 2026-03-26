@@ -48,6 +48,7 @@ class PptControllerOpenApiContractTest {
                                 .content(
                                         """
                                 {
+                                  "id": 1,
                                   "jogador1": "PEDRA",
                                   "jogador2": "TESOURA"
                                 }
@@ -73,6 +74,7 @@ class PptControllerOpenApiContractTest {
                                 .content(
                                         """
                                 {
+                                  "id": 2,
                                   "jogador1": "PAPEL",
                                   "jogador2": "PAPEL"
                                 }
