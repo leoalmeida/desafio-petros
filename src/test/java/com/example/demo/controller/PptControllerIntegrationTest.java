@@ -52,17 +52,17 @@ class PptControllerIntegrationTest {
                 .andExpect(status().isBadRequest());
     }
 
-                @Test
-                void deveRetornarBadRequestQuandoJogador2NaoForInformado() throws Exception {
-                                mockMvc.perform(
-                                                                                                post("/api/v1/PPT")
-                                                                                                                                .contentType(MediaType.APPLICATION_JSON)
-                                                                                                                                .content(
-                                                                                                                                                                """
+    @Test
+    void deveRetornarBadRequestQuandoJogador2NaoForInformado() throws Exception {
+        mockMvc.perform(
+                        post("/api/v1/PPT")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
                                                                                                                                 {
                                                                                                                                         "jogador1": "pedra"
                                                                                                                                 }
                                                                                                                                 """))
-                                                                .andExpect(status().isBadRequest());
-                }
+                .andExpect(status().isBadRequest());
+    }
 }

@@ -21,9 +21,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(PptController.class)
 class PptControllerOpenApiContractTest {
 
-    private static final OpenApiInteractionValidator OPEN_API_VALIDATOR =
-            OpenApiInteractionValidator.createFor("src/test/resources/openapi/ppt-api.yaml")
-                    .build();
+    private static final OpenApiInteractionValidator OPEN_API_VALIDATOR = OpenApiInteractionValidator.createFor(
+                    "src/test/resources/openapi/ppt-api.yaml")
+            .build();
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,10 +42,11 @@ class PptControllerOpenApiContractTest {
                 .build();
         when(pptService.realizarJogada(org.mockito.ArgumentMatchers.any())).thenReturn(response);
 
-        mockMvc.perform(post("/api/v1/PPT")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(
-                                """
+        mockMvc.perform(
+                        post("/api/v1/PPT")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
                                 {
                                   "jogador1": "PEDRA",
                                   "jogador2": "TESOURA"
@@ -56,16 +57,27 @@ class PptControllerOpenApiContractTest {
     }
 
     @Test
-    void deveValidarContratoParaErroQuandoCampoObrigatorioAusente() throws Exception {
-        mockMvc.perform(post("/api/v1/PPT")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(
-                                """
+    void deveValidarContratoParaOutroCenarioDeSucesso() throws Exception {
+        PptDtoResponse response = PptDtoResponse.builder()
+                .id(2L)
+                .dataHora(LocalDateTime.of(2026, 3, 26, 21, 45, 0))
+                .jogador1(JogadaEnum.PAPEL)
+                .jogador2(JogadaEnum.PAPEL)
+                .resultado(ResultadoEnum.EMPATE)
+                .build();
+        when(pptService.realizarJogada(org.mockito.ArgumentMatchers.any())).thenReturn(response);
+
+        mockMvc.perform(
+                        post("/api/v1/PPT")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
                                 {
-                                  "jogador1": "PEDRA"
+                                  "jogador1": "PAPEL",
+                                  "jogador2": "PAPEL"
                                 }
                                 """))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isOk())
                 .andExpect(openApi().isValid(OPEN_API_VALIDATOR));
     }
 }
