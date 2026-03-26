@@ -4,6 +4,6 @@ import com.example.demo.dto.PptDtoRequest;
 import com.example.demo.dto.PptDtoResponse;
 
 public interface PptService {
-    
-    PptDtoResponse realizarJogada(PptDtoRequest request);    
+
+    PptDtoResponse realizarJogada(PptDtoRequest request);
 }
