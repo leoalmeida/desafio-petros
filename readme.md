@@ -4,6 +4,9 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F)
 ![Maven](https://img.shields.io/badge/Maven-Build%20Tool-C71A36)
 
+
+[link docker Hub](https://hub.docker.com/repository/docker/leoalmeida/ppt-game/general)
+
 Aplicacao Java com Spring Boot que expoe uma API REST para jogar Pedra, Papel e Tesoura entre dois jogadores.
 
 ## Objetivo
