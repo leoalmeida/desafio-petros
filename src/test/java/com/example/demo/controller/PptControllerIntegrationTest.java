@@ -79,24 +79,24 @@ class PptControllerIntegrationTest {
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 
-                @Test
-                void deveRetornarBadRequestQuandoJogador1EJogador2NaoForemInformados() throws Exception {
-                                mockMvc.perform(
-                                                                                                post("/api/v1/PPT")
-                                                                                                                                .contentType(MediaType.APPLICATION_JSON)
-                                                                                                                                .content(
-                                                                                                                                                                """
+    @Test
+    void deveRetornarBadRequestQuandoJogador1EJogador2NaoForemInformados() throws Exception {
+        mockMvc.perform(
+                        post("/api/v1/PPT")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
                                                                                                                                 {
                                                                                                                                         "id": 1
                                                                                                                                 }
                                                                                                                                 """))
-                                                                .andExpect(status().isBadRequest())
-                                                                .andExpect(jsonPath("$.status").value(400))
-                                                                .andExpect(jsonPath("$.error").value("Bad Request"))
-                                                                .andExpect(jsonPath("$.message").value("Erro de validacao"))
-                                                                .andExpect(jsonPath("$.fieldErrors.jogador1").value("jogador1 e obrigatorio"))
-                                                                .andExpect(jsonPath("$.fieldErrors.jogador2").value("jogador2 e obrigatorio"))
-                                                                .andExpect(jsonPath("$.path").value("/api/v1/PPT"))
-                                                                .andExpect(jsonPath("$.timestamp").isNotEmpty());
-                }
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message").value("Erro de validacao"))
+                .andExpect(jsonPath("$.fieldErrors.jogador1").value("jogador1 e obrigatorio"))
+                .andExpect(jsonPath("$.fieldErrors.jogador2").value("jogador2 e obrigatorio"))
+                .andExpect(jsonPath("$.path").value("/api/v1/PPT"))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
 }

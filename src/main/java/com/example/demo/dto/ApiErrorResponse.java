@@ -21,4 +21,3 @@ public class ApiErrorResponse {
     private String path;
     private Map<String, String> fieldErrors;
 }
-
