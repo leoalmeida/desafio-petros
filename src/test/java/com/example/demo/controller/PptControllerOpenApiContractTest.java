@@ -75,6 +75,7 @@ class PptControllerOpenApiContractTest {
                                         """
                                 {
                                   "id": 2,
+                                  "id": 2,
                                   "jogador1": "PAPEL",
                                   "jogador2": "PAPEL"
                                 }
