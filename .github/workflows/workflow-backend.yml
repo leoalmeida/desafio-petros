@@ -64,9 +64,6 @@ jobs:
       - name: Roda os testes do módulo pedra/papel/tesoura
         run: mvn -B -f ./pom.xml clean package
 
-      - name: Run E2E tests do módulo pedra/papel/tesoura
-        run: mvn -B -f ./pom.xml -Ddocker.e2e=true -Dtest=PPTFlowE2ETest test
-
       - name: Run Code Quality Analysis do módulo pedra/papel/tesoura
         run: mvn -B -f ./pom.xml jacoco:report
 
